@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div>
+    <button id="btn">click me</button>
+</div>
+
+<script>
+    var btn = document.getElementById('btn'),
+            eventHandler=function(){
+                alert(this.innerText);
+            };
+    if(btn.addEventListener){
+        btn.addEventListener('click',eventHandler,true);
+        document.addEventListener('click',function(){alert('document');},true);
+    }
+    else{
+        btn.attachEvent('onclick',eventHandler);
+        document.attachEvent('onclick',function(){alert('document');});
+    }
+
+
+
+
+</script>
+</body>
+</html>

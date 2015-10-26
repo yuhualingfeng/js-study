@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<input type="button" value="click me" id="btn"/>
+<script>
+    var EventUtil ={
+        addEventHandler:function(element,type,handler){
+            if(element.addEventListener){
+                element.addEventListener(type,handler,false);
+            }
+            else if(element.attachEvent) {
+                element.attachEvent('on'+type,handler);
+            }
+            else{
+                element['on'+type]=handler;
+            }
+        },
+        removeEventHandler:function(element,type,handler){
+            if(element.removeEventListener){
+                element.removeEventListener(type,handler,false);
+            }
+            else if(element.detachEvent){
+                element.detachEvent('on'+type,handler);
+            }
+            else{
+                element['on'+type]=null;
+            }
+        }
+    };
+
+    var btn = document.getElementById('btn'),
+            eventHandler=function(event){
+                alert(this.value);
+            };
+
+    EventUtil.addEventHandler(btn,'click',eventHandler);
+
+
+</script>
+</body>
+</html>

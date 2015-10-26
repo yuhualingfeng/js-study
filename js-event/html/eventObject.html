@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title></title>
+    </head>
+    <body>
+        <script>
+            var x = new Event();
+            x.type
+            x.preventDefault();
+            x.stopPropagation();
+            x.currentTarget;
+            x.target;
+
+            //IE
+            x.cancelBubble;
+            x.returnValue;
+            x.srcElement;
+            x.type;
+
+
+            /*
+             * event对象属性和方法:
+             * type 事件类型
+             * target 事件目标
+             * currentTarget 当前事件目标
+             * preventDefault() 阻止默认行为
+             * stopPropagation() 阻止事件冒泡和捕获
+             *
+             * IE中event对象的属性
+             * cancelBubble 为true时,取消事件冒泡
+             * returnValue 为false时,阻止默认行为
+             * srcElement 当前事件目标
+             * type 事件类型
+             * */
+
+            /*
+             * 跨浏览器的事件对象
+             * */
+            var EventUtil = {
+                addEventHandler: function() {
+                    if (element.addEventListener) {
+                        element.addEventListener(type, handler, false);
+                    }
+                    else if (element.attachEvent) {
+                        element.attachEvent('on' + type, handler);
+                    }
+                    else {
+                        element['on' + type] = handler;
+                    }
+                },
+                removeEventHandler: function() {
+                    if (element.removeEventListener) {
+                        element.removeEventListener(type, handler, false);
+                    }
+                    else if (element.detachEvent) {
+                        element.detachEvent('on' + type, handler);
+                    }
+                    else {
+                        element['on' + type] = null;
+                    }
+                },
+                getEvent: function(event) {
+                    return event ? event : window.event;
+                },
+                getTarget: function(event) {
+                    return event.target || event.srcElement;
+                },
+                preventDefault: function(event) {
+                    if (event.preventDefault) {
+                        event.preventDefault();
+                    }
+                    else {
+                        event.returnValue = false;
+                    }
+                },
+                stopPropagation: function(event) {
+                    if (event.stopPropagation)
+                    {
+                        event.stopPropagation();
+                    }
+                    else {
+                        event.cancelBubble = true;
+                    }
+                }
+
+            };
+
+        </script>
+    </body>
+</html>

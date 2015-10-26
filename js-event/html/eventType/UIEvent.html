@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+<script src="../../js/UseEvent.js"></script>
+</head>
+<body>
+<img src="../../images/Chrysanthemum.jpg" id="img"/>
+<script>
+
+    var img = document.getElementById('img');
+
+    EventUtil.addEventHandler(img,'load',function(){
+        console.log('img loaded');
+    });
+    EventUtil.addEventHandler(window,'unload',function(){
+        document.cookie='version=2';
+    });
+
+    var i =1;
+    EventUtil.addEventHandler(window,'resize',function(){
+        console.log(i=i+1);
+    });
+
+    EventUtil.addEventHandler(window,'scroll',function(){
+        if(document.documentElement){
+            console.log(document.documentElement.scrollTop);
+        }
+        else{
+            console.log(document.body.scrollTop);
+        }
+    });
+    
+
+
+
+    /*
+    * UI事件
+    *   load  （window,body,img,script）
+    *   unload (window,body)
+    *   resize (window)
+    *   scroll (window)
+    * */
+
+
+</script>
+</body>
+</html>

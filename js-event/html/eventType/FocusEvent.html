@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+
+    </style>
+<script src="../../js/UseEvent.js"></script>
+</head>
+<body>
+<input type="text" id="input1"/>
+<input type="text" id="input2"/>
+<script>
+
+    var input1=document.getElementById('input1');
+    var input2=document.getElementById('input2');
+
+    EventUtil.addEventHandler(input1,'blur',function(){
+        console.log('input1 blur');
+    });
+    EventUtil.addEventHandler(input2,'focus',function(){
+       console.log('input2 focus');
+    });
+
+//    EventUtil.addEventHandler(window,'beforeunload',function(){
+//        return "确定要退出吗？";
+//    });
+    document.body.onbeforeunload=function(e){
+        e = e || window.e;
+        document.cookie="name=quit";
+
+        return "确定要退出吗,亲？";
+    }
+
+
+    /*
+    * 焦点事件
+    *   blur
+    *   focus
+    * */
+
+
+</script>
+</body>
+</html>
