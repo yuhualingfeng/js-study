@@ -4,6 +4,7 @@ logs
 
 #IDE
 .idea
+nbproject
 
 # Runtime data
 pids
