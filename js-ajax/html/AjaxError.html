@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AjaxError</title>
+</head>
+<body>
+<button>fruits</button>
+<button id="badHost">Bad Host</button>
+<button id="badUrl">Bad URL</button>
+
+<div id="target">Press a button</div>
+<div id="errorMsg"></div>
+<div id="statusMsg"></div>
+
+<script>
+    var buttons = document.getElementsByTagName('button');
+
+    for(var i= 0,len=buttons.length;i<len;i++){
+        buttons[i].onclick=handleButtonsPress;
+    }
+
+    var httpRequest;
+    function handleButtonsPress(e){
+        clearMessages();
+
+        httpRequest = new XMLHttpRequest();
+        httpRequest.onreadystatechange = handleRequest;
+        httpRequest.onerror = handleError;
+
+        try{
+            switch(e.target.id){
+                case "badHost":
+                    httpRequest.open('GET',"badHost.json");
+                    break;
+                case "badUrl":
+                    httpRequest.open("GET","http://");
+                    break;
+                default :
+                    httpRequest.open("GET", e.target.innerHTML+".json");
+            }
+            httpRequest.send();
+        }
+        catch(error){
+        displayErrorMsg("try/catch",error.message);
+        }
+    }
+
+
+    function handleRequest(e){
+        if(httpRequest.readyState == 4){
+            var target = document.getElementById('target');
+            if(httpRequest.status == 200){
+                target.innerHTML = httpRequest.responseText;
+            }
+            else{
+                document.getElementById('statusMsg').innerHTML = "Status:" + httpRequest.status + " " + httpRequest.statusText;
+            }
+        }
+    }
+
+
+    //httpRequest请求错误事件处理程序
+    function handleError(e){
+        displayErrorMsg("error Event",httpRequest.status+httpRequest.statusText);
+    }
+
+    //展示错误信息
+    function displayErrorMsg(src,msg){
+        document.getElementById('errorMsg').innerHTML = src + ': ' +msg;
+    }
+
+    //清除错误信息
+    function clearMessages(){
+        document.getElementById('errorMsg').innerHTML='';
+        document.getElementById('statusMsg').innerHTML='';
+    }
+
+</script>
+</body>
+</html>

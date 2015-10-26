@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div>
+    <button>fruits</button>
+    <button>Cherries</button>
+    <button>Bananas</button>
+</div>
+
+<div id="target">Press a button</div>
+
+<script type="text/javascript">
+    var buttons = document.getElementsByTagName('button');
+    for(var i= 0,len=buttons.length;i<len;i++){
+        buttons[i].onclick = handButtonPress;
+    }
+
+    var httpRequest;
+    function handButtonPress(e){
+        httpRequest = new XMLHttpRequest();
+        httpRequest.onreadystatechange = handleResponse;
+        httpRequest.open('GET', e.target.innerHTML+'.json');
+        httpRequest.send();
+    }
+
+    function handleResponse(e){
+        if(httpRequest.readyState == 4 && httpRequest.status == 200){
+            document.getElementById('target').innerHTML= httpRequest.responseText;
+        }
+    }
+
+    </script>
+</body>
+</html>
