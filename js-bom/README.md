@@ -72,4 +72,130 @@ var topPos = (typeof window.screenTop == "number") ?
 window.screenTop : window.screenY;
 ```
 ###系统对话框
-系统对话框有三个,
+系统对话框有三个,分别为:`alert`,`confirm`,`prompt`.
+`alert`为系统提示框
+```javascript
+alert('nice to meet you');
+```
+`confirm`为确认框
+```javascript
+var sure = confirm('are you have a good time ?');
+if(sure){
+alert('yes, you have a good time !');
+}
+```
+`prompt`为系统输入框
+```javascript
+var getname = prompt('what's you name ?','name');//参数1为提示语, 参数2为默认字符.
+alert(getname);
+```
+###间歇调用和超时调用
+间歇调用使用`setTimeout`方法,超时调用使用`setInterval`方法
+这两个方法都有两个参数,第一个参数为执行的代码或函数,第二个参数为执行时间.
+当然这两种调用也有对应的方法来清除调用.
+```javascript
+ setTimeout(function(){ alert('good morning!'); },1000); //一秒后弹出弹框.
+ 
+ var count = 0;
+ var interval =  setInterval(function(){      
+    count++;
+    if(count > 10){
+         clearInterval(interval);  //清除间歇调用
+        }
+ },1000); 
+
+```
+`setInterval`有个不足之处是后一个间歇调用可能会在前一个间歇调用结束之前启动,因此使用`setTimeout`来模拟`setInterval`是不错的选择.
+```javascript
+var count = 0; 
+function doSoming(){
+    count ++;
+    if(count<=10){
+ setTimeout(doSoming,1000);    
+}
+}
+setTimeout(doSoming,1000);
+```
+###获取窗口大小
+通过以下代码可以跨浏览器获取页面视口大小
+```javascript
+var pageWidth = window.innerWidth,
+    pageHeight = window.innerHeight;
+if(typeof pageWidth !="number"){
+    if (document.compatMode == "CSS1Compat"){
+        pageWidth = document.documentElement.clientWidth;
+        pageHeight = document.documentElement.clientHeight;
+        }
+    else {
+        pageWidth = document.body.clientWidth;
+        pageHeight = document.body.clientHeight;
+     }
+}
+```
+##location对象
+`location` 是最有用的BOM对象之一，它提供了与当前窗口中加载的文档有关的信息，还提供了一些导航功能
+以下是`location`对象的属性列表.
+1. `hash` 返回URL中的hash（#号后跟零或多个字符），如果URL中不包含散列，则返回空字符串,例"#contents"
+2. `host` 返回服务器名称和端口号(如果有).例"www.zhaosywz.com:80"
+3. `hostname` 返回不带端口号的服务器名称.例"www.zhaosywz.com"
+4. `href` 返回当前页面的完整url.例"www.zhaosywz.com/index.html"
+5. `pathname` 返回url中的目录或文件名,例"/category/shoes"
+6. `port` 返回url的端口号,如果没有则返回空字符串.例"8080"
+7. `protocol` 返回页面使用的协议。通常是http:或https:
+8. `search` 返回URL的查询字符串。这个字符串以问号开头,'?id=100'  
+  
+尽管'search'属性可以返回查询字符串,但为了更加方便的访问其参数,可以通过下面的代码将其转化为包含参数的对象.
+```javascript
+function getQueryStringArgs(){
+    //取得查询字符串并去掉开头的问号
+    var qs = (location.search.length > 0 ? location.search.substring(1) : ""),
+    //保存数据的对象
+    args = {},
+    //取得每一项
+    items = qs.length ? qs.split("&") : [],
+    item = null,
+    name = null,
+    value = null,
+    //在for 循环中使用
+    i = 0,
+    len = items.length;
+    //逐个将每一项添加到args 对象中
+    for (i=0; i < len; i++){
+    item = items[i].split("=");
+    name = decodeURIComponent(item[0]);
+    value = decodeURIComponent(item[1]);
+    if (name.length) {
+    args[name] = value;
+    }
+    }
+    return args;
+}
+```
+通过以下任何一种方式都会导致页面的跳转或重载
+```javascript
+location.href = "http://www.baidu.com";
+```
+```javascript
+location.hash = "#section1";
+```
+```javascript
+location.search = "?q=javascript";
+```
+```javascript
+location.hostname = "www.yahoo.com";
+```
+```javascript
+location.pathname = "mydir";
+```
+```javascript
+location.port = 8080;
+```
+通过`reload()`可以重新加载当前页面
+```javascript
+location.reload(); //重新加载(有可能从缓存中加载)
+location.reload(true);//重新加载(直接从服务器加载)
+```
+
+
+
+
