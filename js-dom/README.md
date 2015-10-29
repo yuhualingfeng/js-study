@@ -120,7 +120,7 @@ var images = document.getElementsByTagName("img"); //取得img元素的引用
 var allElements = document.getElementsByTagName("*"); //获取文档中所有的元素
 ```
 
-> IE7及较低版本还为此方法添加了一个有意思的“怪癖”：name特性与给定ID匹配的表单元素（<input>、<textarea>、<button>及<select>也会被该方法返回
+> IE7及较低版本还为此方法添加了一个有意思的“怪癖”：name特性与给定ID匹配的表单元素也会被该方法返回
 
 #### document.anchors
 包含文档中所有带name 特性的<a>元素
