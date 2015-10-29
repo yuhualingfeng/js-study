@@ -196,18 +196,18 @@ location.reload(); //重新加载(有可能从缓存中加载)
 location.reload(true);//重新加载(直接从服务器加载)
 ```
 ##navigator对象
-最早由 Netscape Navigator 2.0 引入的navigator 对象，现在已经成为识别客户端浏览器的事实标准,navigator有以下跨浏览器属性和方法.
-1. `appCodeName`  浏览器的名称。通常都是Mozilla，即使在非Mozilla浏览器中也是如此
-2. `appName` 完整的浏览器名称
-3. `appVersion` 浏览器版本，一般不与实际的浏览器版本对应.
-4. `cookieEnabled` 表示cookie是否启用
-5. `javaEnabled()` 表示单签浏览器是否启用Java
-6. `onLine` 表示浏览器是否连接到了因特网
-7. `mimeTypes` 在浏览器中注册的MIME类型数组
-8. `platform` 浏览器的系统平台
-9. `plugins` 浏览器中安装的插件信息的数组
-10. `userAgent` 浏览器用户代理字符串
-`userAgent`是最常用的属性.  
+最早由 Netscape Navigator2.0引入的navigator对象，现在已经成为识别客户端浏览器的事实标准,navigator有以下跨浏览器属性和方法.  
+1.  `appCodeName`  浏览器的名称。通常都是Mozilla，即使在非Mozilla浏览器中也是如此  
+2.  `appName` 完整的浏览器名称  
+3.  `appVersion` 浏览器版本，一般不与实际的浏览器版本对应.  
+4.  `cookieEnabled` 表示cookie是否启用  
+5.  `javaEnabled()` 表示单签浏览器是否启用Java  
+6.  `onLine` 表示浏览器是否连接到了因特网  
+7.  `mimeTypes` 在浏览器中注册的MIME类型数组  
+8.  `platform` 浏览器的系统平台  
+9.  `plugins` 浏览器中安装的插件信息的数组  
+10.  `userAgent` 浏览器用户代理字符串  
+`userAgent`是最常用的属性.    
   
 插件检测
 ```javascript
