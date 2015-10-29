@@ -6,43 +6,43 @@ DOM 可以将任何HTML 或XML 文档描绘成一个由多层节点构成的结�
 外也与其他节点存在某种关系
 
 ###节点的公共属和方法
-
-1. `childNodes` 获取子节点
+#### `childNodes` 
+获取子节点
 ```javascript
 var firstChild = someNode.childNodes[0];
 var secondChild = someNode.childNodes.item(1);
 var count = someNode.childNodes.length;
 ```
-1. `parentNode` 获取父节点
-1. `firstNode` 获取第一个子节点
-1. `lastNode` 获取最后一个子节点
-1. `nextSibling` 获取下一个兄弟节点
-1. `previousSibling` 获取上一个兄弟节点
-1. `ownerDocument` 获取文档节点
-1. `hasChildNodes()` 判断是否有子节点
-1. `appendChild()` 添加子节点,接收一个参数表示要添加的节点,返回添加的节点.
+#### `parentNode` 获取父节点
+#### `firstNode` 获取第一个子节点
+#### `lastNode` 获取最后一个子节点
+#### `nextSibling` 获取下一个兄弟节点
+#### `previousSibling` 获取上一个兄弟节点
+#### `ownerDocument` 获取文档节点
+#### `hasChildNodes()` 判断是否有子节点
+#### `appendChild()` 添加子节点,接收一个参数表示要添加的节点,返回添加的节点.
 ```javascript
 var returnedNode = someNode.appendChild(newNode);
 alert(returnedNode == newNode); //true
 alert(someNode.lastChild == newNode); //true
 ```
-1. `insertBefore()`在参考节点前添加子节点,接收两个参数,第一个参数表示要添加的节点,第二个参数表示参考节点,返回添加的节点.
+#### `insertBefore()`在参考节点前添加子节点,接收两个参数,第一个参数表示要添加的节点,第二个参数表示参考节点,返回添加的节点.
 ```javascript
 //插入后成为第一个子节点
 var returnedNode = someNode.insertBefore(newNode, someNode.firstChild);
 alert(returnedNode == newNode); //true
 ```
-1. `replaceChild()` 替换子节点,接收两个参数,第一个参数表示要添加的节点,第二个参数表示被替换的节点,返回被替换的节点.
+#### `replaceChild()` 替换子节点,接收两个参数,第一个参数表示要添加的节点,第二个参数表示被替换的节点,返回被替换的节点.
 ```javascript
 //替换第一个子节点
 var returnedNode = someNode.replaceChild(newNode, someNode.firstChild);
 ```
-1. `removeChild()` 移除子节点,这个方法接受一个参数，即要移除的节点。被移除的节点将成为方法的返回值
+#### `removeChild()` 移除子节点,这个方法接受一个参数，即要移除的节点。被移除的节点将成为方法的返回值
 ```javascript
 //移除第一个子节点
 var formerFirstChild = someNode.removeChild(someNode.firstChild);
 ```
-1. `cloneChild()` 克隆节点,接收一个boolean类型的参数,当参数为true时执行深复制,意即复制内容包含其子节点.
+#### `cloneChild()` 克隆节点,接收一个boolean类型的参数,当参数为true时执行深复制,意即复制内容包含其子节点.
 ```html
 <ul>
 <li>item 1</li>
@@ -67,21 +67,21 @@ JavaScript 通过Document 类型表示文档。在浏览器中，document 对象
 属性，因此可以将其作为全局对象来访问
 ###document对象的属性和方法
 
-1 `document.documentElement` 获取html节点元素
+#### `document.documentElement` 获取html节点元素
 ```javascript
 var html = document.documentElement; //取得对<html>的引用
 alert(html === document.childNodes[0]); //true
 alert(html === document.firstChild); //true
 ```
-2. `document.body` 获取body节点元素
-3. `document.title` 获取title文字节点元素
+#### `document.body` 获取body节点元素
+#### `document.title` 获取title文字节点元素
 ```javascript
 //取得文档标题
 var originalTitle = document.title;
 //设置文档标题
 document.title = "New page title";
 ```
-4. document.URL,document.domain , document.referrer
+#### document.URL,document.domain , document.referrer
 ```javascript
 //取得完整的URL
 var url = document.URL;
@@ -90,19 +90,18 @@ var domain = document.domain;
 //取得来源页面的URL
 var referrer = document.referrer;
 ```
-5. getElementById(),getElementsByTagName(),getElementsByTagName()
+#### getElementById(),getElementsByTagName(),getElementsByTagName()
 ```javascript
 var div = document.getElementById("myDiv"); //取得id='myDiv'元素的引用
 var images = document.getElementsByTagName("img"); //取得img元素的引用
 var allElements = document.getElementsByTagName("*"); //获取文档中所有的元素
 ```
 IE7及较低版本还为此方法添加了一个有意思的“怪癖”：name 特性与给定ID 匹配的表单元素（<input>、<textarea>、<button>及<select>）也会被该方法返回
-6. `document.anchors` 包含文档中所有带name 特性的<a>元素
-7. `document.forms` 包含文档中所有的<form>元素，与document.getElementsByTagName("form")得到的结果相同
-8. `document.images` 包含文档中所有的<img>元素，与document.getElementsByTagName("img")得到的结果相同；
-9. `document.links` 包含文档中所有带href 特性的<a>元素。
-
-###DOM 一致性检测
+#### `document.anchors` 包含文档中所有带name 特性的<a>元素
+#### `document.forms` 包含文档中所有的<form>元素，与document.getElementsByTagName("form")得到的结果相同
+#### `document.images` 包含文档中所有的<img>元素，与document.getElementsByTagName("img")得到的结果相同；
+#### `document.links` 包含文档中所有带href 特性的<a>元素。
+###DOM一致性检测
 由于 DOM 分为多个级别，也包含多个部分，因此检测浏览器实现了DOM的哪些部分就十分必要
 了。document.implementation 属性就是为此提供相应信息和功能的对象，与浏览器对DOM的实现
 直接对应。DOM1 级只为document.implementation 规定了一个方法，即hasFeature()。这个方
@@ -111,6 +110,7 @@ IE7及较低版本还为此方法添加了一个有意思的“怪癖”：name 
 ```javascript
 var hasXmlDom = document.implementation.hasFeature("XML", "1.0");
 ```
+
 以下为列出了可以检测的不同的值及版本号
 
 1. Core            1.0、2.0、3.0            基本的DOM，用于描述表现文档的节点树
