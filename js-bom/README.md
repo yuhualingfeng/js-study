@@ -135,6 +135,7 @@ if(typeof pageWidth !="number"){
 ##location对象
 `location` 是最有用的BOM对象之一，它提供了与当前窗口中加载的文档有关的信息，还提供了一些导航功能
 以下是`location`对象的属性列表.  
+
 1. `hash` 返回URL中的hash（#号后跟零或多个字符），如果URL中不包含散列，则返回空字符串,例"#contents"  
 2. `host` 返回服务器名称和端口号(如果有).例"www.zhaosywz.com:80"  
 3. `hostname` 返回不带端口号的服务器名称.例"www.zhaosywz.com"  
@@ -197,6 +198,7 @@ location.reload(true);//重新加载(直接从服务器加载)
 ```
 ##navigator对象
 最早由 Netscape Navigator2.0引入的navigator对象，现在已经成为识别客户端浏览器的事实标准,navigator有以下跨浏览器属性和方法.  
+
 1.  `appCodeName`  浏览器的名称。通常都是Mozilla，即使在非Mozilla浏览器中也是如此  
 2.  `appName` 完整的浏览器名称  
 3.  `appVersion` 浏览器版本，一般不与实际的浏览器版本对应.  
@@ -207,6 +209,7 @@ location.reload(true);//重新加载(直接从服务器加载)
 8.  `platform` 浏览器的系统平台  
 9.  `plugins` 浏览器中安装的插件信息的数组  
 10.  `userAgent` 浏览器用户代理字符串  
+
 `userAgent`是最常用的属性.    
   
 插件检测
