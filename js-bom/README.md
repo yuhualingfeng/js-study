@@ -134,15 +134,15 @@ if(typeof pageWidth !="number"){
 ```
 ##location对象
 `location` 是最有用的BOM对象之一，它提供了与当前窗口中加载的文档有关的信息，还提供了一些导航功能
-以下是`location`对象的属性列表.
-1. `hash` 返回URL中的hash（#号后跟零或多个字符），如果URL中不包含散列，则返回空字符串,例"#contents"
-2. `host` 返回服务器名称和端口号(如果有).例"www.zhaosywz.com:80"
-3. `hostname` 返回不带端口号的服务器名称.例"www.zhaosywz.com"
-4. `href` 返回当前页面的完整url.例"www.zhaosywz.com/index.html"
-5. `pathname` 返回url中的目录或文件名,例"/category/shoes"
-6. `port` 返回url的端口号,如果没有则返回空字符串.例"8080"
-7. `protocol` 返回页面使用的协议。通常是http:或https:
-8. `search` 返回URL的查询字符串。这个字符串以问号开头,'?id=100'  
+以下是`location`对象的属性列表.  
+1. `hash` 返回URL中的hash（#号后跟零或多个字符），如果URL中不包含散列，则返回空字符串,例"#contents"  
+2. `host` 返回服务器名称和端口号(如果有).例"www.zhaosywz.com:80"  
+3. `hostname` 返回不带端口号的服务器名称.例"www.zhaosywz.com"  
+4. `href` 返回当前页面的完整url.例"www.zhaosywz.com/index.html"  
+5. `pathname` 返回url中的目录或文件名,例"/category/shoes"  
+6. `port` 返回url的端口号,如果没有则返回空字符串.例"8080"  
+7. `protocol` 返回页面使用的协议。通常是http:或https:  
+8. `search` 返回URL的查询字符串。这个字符串以问号开头,'?id=100'     
   
 尽管'search'属性可以返回查询字符串,但为了更加方便的访问其参数,可以通过下面的代码将其转化为包含参数的对象.
 ```javascript
