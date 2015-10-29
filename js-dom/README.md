@@ -96,7 +96,7 @@ var div = document.getElementById("myDiv"); //取得id='myDiv'元素的引用
 var images = document.getElementsByTagName("img"); //取得img元素的引用
 var allElements = document.getElementsByTagName("*"); //获取文档中所有的元素
 ```
-IE7及较低版本还为此方法添加了一个有意思的“怪癖”：name 特性与给定ID 匹配的表单元素（<input>、<textarea>、<button>及<select>）也会被该方法返回
+> IE7及较低版本还为此方法添加了一个有意思的“怪癖”：name 特性与给定ID匹配的表单元素也会被该方法返回
 #### `document.anchors` 包含文档中所有带name 特性的<a>元素
 #### `document.forms` 包含文档中所有的<form>元素，与document.getElementsByTagName("form")得到的结果相同
 #### `document.images` 包含文档中所有的<img>元素，与document.getElementsByTagName("img")得到的结果相同；
