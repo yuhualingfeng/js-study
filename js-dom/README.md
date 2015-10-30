@@ -73,7 +73,9 @@ alert(shallowList.childNodes.length); //0
 理程序等。这个方法只复制特性、（在明确指定的情况下也复制）子节点，其他一切
 都不会复制。IE 在此存在一个bug，即它会复制事件处理程序，所以我们建议在复制
 之前最好先移除事件处理程序。
+
 ##Doucment类型
+
 JavaScript 通过Document 类型表示文档。在浏览器中，document 对象是HTMLDocument（继承
 自Document 类型）的一个实例，表示整个HTML 页面。而且，document 对象是window 对象的一个
 属性，因此可以将其作为全局对象来访问
@@ -158,5 +160,106 @@ var hasXmlDom = document.implementation.hasFeature("XML", "1.0");
 1. LS              3.0                      文件与DOM树之间的同步加载和保存
 1. LS-Async        3.0                      文件与DOM树之间的异步加载和保存
 1. Validation      3.0                      在确保有效的前提下修改DOM树的方法
+##Element类型
+###HTML元素
+所有 HTML 元素都由HTMLElement 类型表示，不是直接通过这个类型，也是通过它的子类型来表
+示。HTMLElement 类型直接继承自Element 并添加了一些属性。添加的这些属性分别对应于每个HTML
+元素中都存在的下列标准特性。
+
++ id，元素在文档中的唯一标识符。
++ title，有关元素的附加说明信息，一般通过工具提示条显示出来。
++ lang，元素内容的语言代码，很少使用。
++ dir，语言的方向，值为"ltr"（left-to-right，从左至右）或"rtl"（right-to-left，从右至左），也很少使用。
++ className，与元素的class 特性对应，即为元素指定的CSS类。没有将这个属性命名为class，是因为class 是ECMAScript 的保留字
+
+```html
+<div id="myDiv" class="bd" title="Body text" lang="en" dir="ltr"></div>
+```
+```javascript
+var div = document.getElementById("myDiv");
+alert(div.id); //"myDiv""
+alert(div.className); //"bd"
+alert(div.title); //"Body text"
+alert(div.lang); //"en"
+alert(div.dir); //"ltr"
+
+div.id = "someOtherId";
+div.className = "ft";
+div.title = "Some other text";
+div.lang = "fr";
+div.dir ="rtl";
+```
+####特性操作
+有三个方法可以操作元素的特性,`getAttribute()` `setAttribute()` `removeAttribute()`
+```javascript
+var div = document.getElementById("myDiv");
+alert(div.getAttribute("id")); //"myDiv"
+alert(div.getAttribute("class")); //"bd"
+
+div.setAttribute("id", "someOtherId");
+div.setAttribute("class", "ft");
+div.setAttribute("title", "Some other text");
+
+div.removeAttribute("class");
+```
+有两类特殊的特性，它们虽然有对应的属性名，但属性的值与通过getAttribute()返回的值并不
+相同。第一类特性就是style，用于通过CSS 为元素指定样式。在通过getAttribute()访问时，返
+回的style 特性值中包含的是CSS 文本，而通过属性来访问它则会返回一个对象。
+第二类与众不同的特性是onclick 这样的事件处理程序。当在元素上使用时，onclick 特性中包
+含的是JavaScript 代码，如果通过getAttribute()访问，则会返回相应代码的字符串.  
+IE6 及以前版本不支持removeAttribute()。
+####attributes 属性
+Element类型是使用`attributes`属性的唯一一个DOM节点类型,`attributes`属性是NamedNodeMap类型的对象,它有以下几个方法
+
++ getNamedItem(name)：返回nodeName 属性等于name 的节点；
++ removeNamedItem(name)：从列表中移除nodeName 属性等于name 的节点；
++ setNamedItem(node)：向列表中添加节点，以节点的nodeName 属性为索引；
++ item(pos)：返回位于数字pos 位置处的节点。
+
+```javascript
+var id = element.attributes.getNamedItem("id").nodeValue;
+var id = element.attributes["id"].nodeValue;
+element.attributes["id"].nodeValue = "someOtherId";
+```
+由于`attributes`的方法不够方便，因此开发人员更多的会使用`getAttribute()`、`removeAttribute()`和`setAttribute()`方法。
+####创建元素
+使用 document.createElement()方法可以创建新元素。这个方法只接受一个参数，即要创建元素的标签名。
+```javascript
+var div = document.createElement('div');
+div.id = 'myDiv';
+div.className = 'box';
+
+document.appendChild(div);
+```
+在 IE 中可以以另一种方式使用createElement()，即为这个方法传入完整的元素标签，也可以包含属性，如下面的例子所示。
+```javascript
+var div = document.createElement("<div id=\"myNewDiv\" class=\"box\"></div >");
+```
+这种方式有助于避开在IE7 及更早版本中动态创建元素的某些问题。下面是已知的一些这类问题。
+
++ 不能设置动态创建的<iframe>元素的name 特性
++ 不能通过表单的reset()方法重设动态创建的<input>元素
++ 动态创建的 type 特性值为"reset"的<buttou>元素重设不了表单
++ 动态创建的一批name 相同的单选按钮彼此毫无关系。name 值相同的一组单选按钮本来应该用于表示同一选项的不同值，但动态创建的一批这种单选按钮之间却没有这种关系
+
+上述所有问题都可以通过在 createElement()中指定完整的HTML标签来解决，如下面的例子所示。
+```javascript
+if (client.browser.ie && client.browser.ie <=7){
+//创建一个带name 特性的iframe 元素
+var iframe = document.createElement("<iframe name=\"myframe\"></iframe>");
+//创建input 元素
+var input = document.createElement("<input type=\"checkbox\">");
+//创建button 元素
+var button = document.createElement("<button type=\"reset\"></button>");
+//创建单选按钮
+var radio1 = document.createElement("<input type=\"radio\" name=\"choice\" "＋
+"value=\"1\">");
+var radio2 = document.createElement("<input type=\"radio\" name=\"choice\" "＋
+"value=\"2\">");
+}
+```
+
+
+
 
 
