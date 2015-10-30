@@ -237,12 +237,12 @@ var div = document.createElement("<div id=\"myNewDiv\" class=\"box\"></div >");
 ```
 这种方式有助于避开在IE7 及更早版本中动态创建元素的某些问题。下面是已知的一些这类问题。
 
-+ 不能设置动态创建的<iframe>元素的name 特性
-+ 不能通过表单的reset()方法重设动态创建的<input>元素
-+ 动态创建的 type 特性值为"reset"的<buttou>元素重设不了表单
++ 不能设置动态创建的`<iframe>`元素的name 特性
++ 不能通过表单的`reset()`方法重设动态创建的<input>元素
++ 动态创建的 type 特性值为"reset"的`<buttou>`元素重设不了表单
 + 动态创建的一批name 相同的单选按钮彼此毫无关系。name 值相同的一组单选按钮本来应该用于表示同一选项的不同值，但动态创建的一批这种单选按钮之间却没有这种关系
 
-上述所有问题都可以通过在 createElement()中指定完整的HTML标签来解决，如下面的例子所示。
+上述所有问题都可以通过在 `createElement()`中指定完整的HTML标签来解决，如下面的例子所示。
 ```javascript
 if (client.browser.ie && client.browser.ie <=7){
 //创建一个带name 特性的iframe 元素
