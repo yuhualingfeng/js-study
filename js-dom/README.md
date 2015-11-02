@@ -258,7 +258,43 @@ var radio2 = document.createElement("<input type=\"radio\" name=\"choice\" "＋
 "value=\"2\">");
 }
 ```
+##Text类型
+文本节点由 Text 类型表示，包含的是可以照字面解释的纯文本内容。纯文本中可以包含转义后的HTML 字符，但不能包含HTML代码。  
 
+使用下列方法可以操作节点中的文本
+
++ appendData(text)：将text 添加到节点的末尾。
++ deleteData(offset, count)：从offset 指定的位置开始删除count 个字符。
++ insertData(offset, text)：在offset 指定的位置插入text。
++ replaceData(offset, count, text)：用text 替换从offset 指定的位置开始到offset+count为止处的文本
++ splitText(offset)：从offset 指定的位置将当前文本节点分成两个文本节点
++ substringData(offset, count)：提取从offset 指定的位置开始到offset+count 为止处的字符串
+
+###创建文本节点
+通过`createTextNode()`可以创建文本节点.
+```
+var textNode = document.createTextNode("<strong>Hello</strong> world!");
+```
+下面展示如何将一个文本节点添加到文档中
+```
+var element = document.createElement("div");
+element.className = "message";
+var textNode = document.createTextNode("Hello world!");
+element.appendChild(textNode);
+document.body.appendChild(element);
+```
+###合并文本节点
+一个元素可能会存在多个文本节点,但是文本节点之间也没有空格,因此无法区分哪个节点对应的是哪个文本,通过下面的方法可以将`element`元素的文本节点合并.
+```javascript
+element.normalize();
+```
+当然也可以分割文本节点,使用`splitText(index)`,index表示字符索引.
+```javascript
+var newNode = element.firstChild.splitText(5);从位置5 开始。位置5是"Hello"和"world!"之间的空格
+alert(element.firstChild.nodeValue); //"Hello"
+alert(newNode.nodeValue); //" world!"
+alert(element.childNodes.length); //2
+```
 
 
 
