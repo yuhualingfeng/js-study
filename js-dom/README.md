@@ -365,5 +365,9 @@ alert("Hello, " + div.dataset.myname);
 某个元素有一个事件处理程序（或者引用了一个JavaScript 对象作为属性），在使用前述某个属性将该元
 素从文档树中删除后，元素与事件处理程序（或JavaScript 对象）之间的绑定关系在内存中并没有一并
 删除。如果这种情况频繁出现，页面占用的内存数量就会明显增加。因此，在使用innerHTML、
-outerHTML 属性方法时，最好先手工删除要被替换的元素的所有事件处理
-程序和JavaScript 对象属性
+outerHTML 属性方法时，最好先手工删除要被替换的元素的所有事件处理程序和JavaScript 对象属性
+###scrollIntoView()方法
+```javascript
+//让元素可见
+document.forms[0].scrollIntoView();
+```
