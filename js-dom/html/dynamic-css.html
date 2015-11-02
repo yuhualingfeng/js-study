@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>dynamic-css</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>TODO write content</div>
+        <script type="text/javascript">
+            
+            //Method 1
+            function loadStyles(url){
+                
+                var link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = url;
+                var head = document.getElementsByTagName('head')[0];
+                head.appendChild(link);
+            }
+            loadStyles('../css/test.css');
+            
+            //Method 2
+            function loadStyleString(css){
+                var style = document.createElement('style');
+                style.rel = 'stylesheet';
+                style.type = 'text/css';
+                try{
+                    style.appendChild(document.createTextNode(css));
+                }
+                catch(ex){
+                    style.styleSheet.cssText = css;
+                }
+                var head = document.getElementsByTagName('head')[0];
+                head.appendChild(style);
+                
+            }
+            
+            loadStyleString('body{border:solid 5px gray;}');
+        </script>
+    </body>
+</html>

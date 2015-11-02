@@ -258,8 +258,112 @@ var radio2 = document.createElement("<input type=\"radio\" name=\"choice\" "＋
 "value=\"2\">");
 }
 ```
+#DOM扩展
+##选择符API
+Selectors API Level 1 的核心是两个方法：querySelector()和querySelectorAll()。在兼容的浏
+览器中，可以通过Document 及Element 类型的实例调用它们。目前已完全支持Selectors API Level 1
+的浏览器有IE 8+、Firefox 3.5+、Safari 3.1+、Chrome 和Opera 10+。
+###querySelector()方法
+```javascript
+//取得body 元素
+var body = document.querySelector("body");
+//取得ID 为"myDiv"的元素
+var myDiv = document.querySelector("#myDiv");
+//取得类为"selected"的第一个元素
+var selected = document.querySelector(".selected");
+//取得类为"button"的第一个图像元素
+var img = document.body.querySelector("img.button");
+```
+###querySelectorAll()方法
+```javascript
+//取得某<div>中的所有<em>元素（类似于getElementsByTagName("em")）
+var ems = document.getElementById("myDiv").querySelectorAll("em");
+//取得类为"selected"的所有元素
+var selecteds = document.querySelectorAll(".selected");
+//取得所有<p>元素中的所有<strong>元素
+var strongs = document.querySelectorAll("p strong");
+```
+##HTML5
+###与类相关的扩充
+####getElementsByClassName()方法
+```javascript
+//取得所有类中包含"username"和"current"的元素，类名的先后顺序无所谓
+var allCurrentUsernames = document.getElementsByClassName("username current");
+```
+支持 getElementsByClassName()方法的浏览器有IE 9+、Firefox 3+、Safari 3.1+、Chrome 和
+Opera 9.5+。
+###焦点管理
+####document.activeElement
+这个属性指向的是当前获得焦点的元素,使用`focus()`可以让元素获得焦点
+```javascript
+var button = document.getElementById("myButton");
+button.focus();
+alert(document.activeElement === button); //true
+```
+####document.hasFocus()
+这个方法用于确定文档是否获得了焦点
+```javascript
+var button = document.getElementById("myButton");
+button.focus();
+alert(document.hasFocus()); //true
+```
+实现了这两个属性的浏览器的包括IE 4+、Firefox 3+、Safari 4+、Chrome 和Opera 8+。
+###HTMLDocument的变化
+####readyState 属性
+document.readyState表示文档的加载进度,它有两个值分别为'loading'和'complete'.
+```
+if(document.readyState == 'complete'){
+    //执行操作
+}
+支持 readyState 属性的浏览器有IE4+、Firefox 3.6+、Safari、Chrome 和Opera 9+。
+####compatMode 的属性
+document.compatMode属性告诉开发人员浏览器采用了哪种渲染模式。在标准模式下，document.compatMode 的
+值等于"CSS1Compat"，而在混杂模式下，document.compatMode 的值等于"BackCompat"。
+```javascript
+if (document.compatMode == "CSS1Compat"){
+alert("Standards mode");
+} else {
+alert("Quirks mode");
+}
+```
+兼容性:IE、Firefox、Safari 3.1+、Opera 和Chrome
+###字符编码
+####document.charset
+当前文档的字符编码
+####document.defaultCharset
+当前文档的默认字符编码
+###自定义数据属性
+HTML5 规定可以为元素添加非标准的属性，但要添加前缀data-，目的是为元素提供与渲染无关的信息，或者提供语义信息。
+```html
+<div id="myDiv" data-appId="12345" data-myname="Nicholas"></div>
+```
+```javascript
+var div = document.getElementById("myDiv");
+//取得自定义属性的值
+var appId = div.dataset.appId;
+var myName = div.dataset.myname;
+//设置值
+div.dataset.appId = 23456;
+div.dataset.myname = "Michael";
 
-
-
-
-
+if (div.dataset.myname){
+alert("Hello, " + div.dataset.myname);
+}
+```
+支持自定义数据属性的浏览器有Firefox 6+和Chrome
+###插入标记
+####innerHTML属性
+在读模式下，innerHTML 属性返回与调用元素的所有子节点（包括元素、注释和文本节点）对应
+的HTML 标记。在写模式下，innerHTML 会根据指定的值创建新的DOM树，然后用这个DOM树完全
+替换调用元素原先的所有子节点
+####outerHTML 属性
+在读模式下，outerHTML 返回调用它的元素及所有子节点的HTML 标签。在写模式下，outerHTML
+会根据指定的HTML 字符串创建新的DOM 子树，然后用这个DOM子树完全替换调用元素。
+####内存与性能问题
+使用本节介绍的方法替换子节点可能会导致浏览器的内存占用问题，尤其是在IE 中，问题更加明
+显。在删除带有事件处理程序或引用了其他JavaScript 对象子树时，就有可能导致内存占用问题。假设
+某个元素有一个事件处理程序（或者引用了一个JavaScript 对象作为属性），在使用前述某个属性将该元
+素从文档树中删除后，元素与事件处理程序（或JavaScript 对象）之间的绑定关系在内存中并没有一并
+删除。如果这种情况频繁出现，页面占用的内存数量就会明显增加。因此，在使用innerHTML、
+outerHTML 属性方法时，最好先手工删除要被替换的元素的所有事件处理
+程序和JavaScript 对象属性

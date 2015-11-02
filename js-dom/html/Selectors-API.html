@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Selectors-API</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>TODO write content</div>
+
+        <script type ='text/javascript'>
+            //目前已完全支持Selectors API Level 1的浏览器有IE 8+、Firefox 3.5+、Safari 3.1+、Chrome 和Opera 10+
+
+            //取得body元素
+            var body = document.querySelector('body');
+            //取得ID为"myDiv"的元素
+            var myDiv = document.querySelector('#myDiv');
+            //取得类为'selected'的第一个元素
+            var selected = document.querySelector('.selected');
+            //取得类为'button'的第一个图像元素
+            var img = document.body.querySelector('img.button');
+
+
+            //取得某<div>中的所有<em>元素（类似于getElementsByTagName("em")）
+            var ems = document.getElementById("myDiv").querySelectorAll("em");
+            //取得类为"selected"的所有元素
+            var selecteds = document.querySelectorAll(".selected");
+            //取得所有<p>元素中的所有<strong>元素
+            var strongs = document.querySelectorAll("p strong");
+
+
+
+
+
+        </script>
+    </body>
+</html>
