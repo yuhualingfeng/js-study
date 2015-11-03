@@ -452,7 +452,7 @@ myDiv.style.cssText = "width: 25px; height: 100px; background-color: green";
 alert(myDiv.style.cssText);
 ```
 ###操作样式表
-CSSStyleSheet 类型表示的是样式表，包括通过<link>元素包含的样式表和在<style>元素中定义的样式表,使用下面的代码可以确定浏览器是否支持DOM2 级样式表:
+CSSStyleSheet 类型表示的是样式表，包括通过`<link>`元素包含的样式表和在`<style>`元素中定义的样式表,使用下面的代码可以确定浏览器是否支持DOM2 级样式表:
 ```javascript
 var supportsDOM2StyleSheets =document.implementation.hasFeature("StyleSheets", "2.0");
 ```
