@@ -473,7 +473,7 @@ CSSStyleSheet 继承自StyleSheet，后者可以作为一个基础接口来定�
 + deleteRule(index)：删除cssRules 集合中指定位置的规则。IE 不支持这个方法，但支持一个类似的removeRule()方法。
 + insertRule(rule,index)：向cssRules 集合中指定的位置插入rule 字符串。IE 不支持这个方法，但支持一个类似的addRule()方法。
 
-应用于文档的所有样式表是通过 `document.styleSheets` 集合来表示的。也可以直接通过<link>或<style>元素取得CSSStyleSheet 对象。DOM 规定了一个包含CSSStyleSheet 对象的属性，名叫`sheet`；除了IE，其他浏览器都支持这个属性。IE 支持的是`styleSheet`属性
+应用于文档的所有样式表是通过 `document.styleSheets` 集合来表示的。也可以直接通过`<link>`或`<style>`元素取得CSSStyleSheet 对象。DOM 规定了一个包含CSSStyleSheet 对象的属性，名叫`sheet`；除了IE，其他浏览器都支持这个属性。IE 支持的是`styleSheet`属性
 
 ###元素大小
 ####偏移量
