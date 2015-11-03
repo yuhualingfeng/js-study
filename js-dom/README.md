@@ -237,12 +237,12 @@ var div = document.createElement("<div id=\"myNewDiv\" class=\"box\"></div >");
 ```
 这种方式有助于避开在IE7 及更早版本中动态创建元素的某些问题。下面是已知的一些这类问题。
 
-+ 不能设置动态创建的<iframe>元素的name 特性
-+ 不能通过表单的reset()方法重设动态创建的<input>元素
-+ 动态创建的 type 特性值为"reset"的<buttou>元素重设不了表单
++ 不能设置动态创建的`<iframe>`元素的name 特性
++ 不能通过表单的`reset()`方法重设动态创建的<input>元素
++ 动态创建的 type 特性值为"reset"的`<buttou>`元素重设不了表单
 + 动态创建的一批name 相同的单选按钮彼此毫无关系。name 值相同的一组单选按钮本来应该用于表示同一选项的不同值，但动态创建的一批这种单选按钮之间却没有这种关系
 
-上述所有问题都可以通过在 createElement()中指定完整的HTML标签来解决，如下面的例子所示。
+上述所有问题都可以通过在 `createElement()`中指定完整的HTML标签来解决，如下面的例子所示。
 ```javascript
 if (client.browser.ie && client.browser.ie <=7){
 //创建一个带name 特性的iframe 元素
@@ -257,6 +257,43 @@ var radio1 = document.createElement("<input type=\"radio\" name=\"choice\" "＋
 var radio2 = document.createElement("<input type=\"radio\" name=\"choice\" "＋
 "value=\"2\">");
 }
+```
+##Text类型
+文本节点由 Text 类型表示，包含的是可以照字面解释的纯文本内容。纯文本中可以包含转义后的HTML 字符，但不能包含HTML代码。  
+
+使用下列方法可以操作节点中的文本
+
++ appendData(text)：将text 添加到节点的末尾。
++ deleteData(offset, count)：从offset 指定的位置开始删除count 个字符。
++ insertData(offset, text)：在offset 指定的位置插入text。
++ replaceData(offset, count, text)：用text 替换从offset 指定的位置开始到offset+count为止处的文本
++ splitText(offset)：从offset 指定的位置将当前文本节点分成两个文本节点
++ substringData(offset, count)：提取从offset 指定的位置开始到offset+count 为止处的字符串
+
+###创建文本节点
+通过`createTextNode()`可以创建文本节点.
+```
+var textNode = document.createTextNode("<strong>Hello</strong> world!");
+```
+下面展示如何将一个文本节点添加到文档中
+```
+var element = document.createElement("div");
+element.className = "message";
+var textNode = document.createTextNode("Hello world!");
+element.appendChild(textNode);
+document.body.appendChild(element);
+```
+###合并文本节点
+一个元素可能会存在多个文本节点,但是文本节点之间也没有空格,因此无法区分哪个节点对应的是哪个文本,通过下面的方法可以将`element`元素的文本节点合并.
+```javascript
+element.normalize();
+```
+当然也可以分割文本节点,使用`splitText(index)`,index表示字符索引.
+```javascript
+var newNode = element.firstChild.splitText(5);从位置5 开始。位置5是"Hello"和"world!"之间的空格
+alert(element.firstChild.nodeValue); //"Hello"
+alert(newNode.nodeValue); //" world!"
+alert(element.childNodes.length); //2
 ```
 #DOM扩展
 ##选择符API
@@ -371,3 +408,106 @@ outerHTML 属性方法时，最好先手工删除要被替换的元素的所有�
 //让元素可见
 document.forms[0].scrollIntoView();
 ```
+#DOM2和DOM3
+DOM2 和DOM3级分为许多模块（模块之间具有某种关联），分别描述了DOM 的某个非常具体的子集。这些模块如下
+
++ DOM2 级核心（DOM Level 2 Core）：在1 级核心基础上构建，为节点添加了更多方法和属性。
++ DOM2 级视图（DOM Level 2 Views）：为文档定义了基于样式信息的不同视图。
++ DOM2 级事件（DOM Level 2 Events）：说明了如何使用事件与DOM文档交互。
++ DOM2 级样式（DOM Level 2 Style）：定义了如何以编程方式来访问和改变CSS 样式信息。
++ DOM2 级遍历和范围（DOM Level 2 Traversal and Range）：引入了遍历DOM 文档和选择其特定部分的新接口。
++ DOM2 级 HTML（DOM Level 2 HTML）：在1 级HTML 基础上构建，添加了更多属性、方法和新接口
+
+##样式
+在 HTML 中定义样式的方式有3 种：通过<link/>元素包含外部样式表文件、使用<style/>元素
+定义嵌入式样式，以及使用style 特性定义针对特定元素的样式。“DOM2 级样式”模块围绕这3 种应用
+样式的机制提供了一套API。要确定浏览器是否支持DOM2 级定义的CSS 能力，可以使用下列代码
+```javascript
+var supportsDOM2CSS = document.implementation.hasFeature("CSS", "2.0");
+var supportsDOM2CSS2 = document.implementation.hasFeature("CSS2", "2.0");
+```
+###访问元素的样式
+任何支持 style 特性的HTML 元素在JavaScript 中都有一个对应的style 属性。访问和设置元素的css属性可以这样操作:
+```javascript
+var div = document.getElementById('myDiv');
+console.log(div.style.color); //获取color值
+div.style.color = 'red';    //设置color值
+div.style.fontSize = '20px';//设置font-size的值(这里会将有短横线的值转化为驼峰命名来获取或设置) 
+```
+注：IE6+,chrome,firfox支持这种获取或设置css的方式.这里有一个特例,由于`float`是保留关键字,所以通过`cssFloat`来访问和设置,而IE中则通过`styleFloat`来设置或访问.  
+元素的`style`对象除了有css的样式属性外,也包含了自己的一些属性,具体如下:
+
++ `cssText`：通过它能够访问和设置style 特性中的CSS代码.支持IE6+,chrome,firfox.
++ `length`：应用给元素的CSS 属性的数量。支持IE9+,chrome,firfox.
++ `parentRule`：表示CSS 信息的CSSRule 对象,后面将讨论CSSRule 类型。
++ `getPropertyPriority(propertyName)`：如果给定的属性使用了!important 设置，则返回"important"；否则，返回空字符串。支持IE9+,chrome,firfox.
++ `getPropertyValue(propertyName)`：返回给定属性的字符串值。支持IE9+、Safari,Chrome,firfox
++ `item(index)`：返回给定位置的CSS 属性的名称。支持IE9+、Safari,Chrome,firfox
++ `removeProperty(propertyName)`：从样式中删除给定属性。支持IE9+、Safari,Chrome,firfox
++ `setProperty(propertyName,value,priority)`：将给定属性设置为相应的值，并加上优先权标志（"important"或者一个空字符串）。支持IE9+、Safari,Chrome,firfox
+
+```javascript
+//设置style对象的cssText属性
+myDiv.style.cssText = "width: 25px; height: 100px; background-color: green";
+alert(myDiv.style.cssText);
+```
+###操作样式表
+CSSStyleSheet 类型表示的是样式表，包括通过<link>元素包含的样式表和在<style>元素中定义的样式表,使用下面的代码可以确定浏览器是否支持DOM2 级样式表:
+```javascript
+var supportsDOM2StyleSheets =document.implementation.hasFeature("StyleSheets", "2.0");
+```
+CSSStyleSheet 继承自StyleSheet，后者可以作为一个基础接口来定义非CSS 样式表。从StyleSheet 接口继承而来的属性如下:
+
++ `disabled`：表示样式表是否被禁用的布尔值。这个属性是可读/写的，将这个值设置为true可以禁用样式表。
++ `href`：如果样式表是通过<link>包含的，则是样式表的URL；否则，是null。
++ `media`：当前样式表支持的所有媒体类型的集合。与所有DOM 集合一样，这个集合也有一个length 属性和一个item()方法。也可以使用方括号语法取得集合中特定的项。如果集合是空列表，表示样式表适用于所有媒体。在IE 中，media 是一个反映<link>和<style>元素media特性值的字符串。
++ `ownerNode`：指向拥有当前样式表的节点的指针，样式表可能是在HTML 中通过<link>或<style/>引入的（在XML 中可能是通过处理指令引入的）。如果当前样式表是其他样式表通过@import 导入的，则这个属性值为null。IE 不支持这个属性。
++ `parentStyleSheet`：在当前样式表是通过@import 导入的情况下，这个属性是一个指向导入它的样式表的指针。
++ `title`：ownerNode 中title 属性的值。
++ `type`：表示样式表类型的字符串。对CSS 样式表而言，这个字符串是"type/css"。
+
+除了 disabled 属性之外，其他属性都是只读的。在支持以上所有这些属性的基础上，CSSStyleSheet 类型还支持下列属性和方法：
+
++ cssRules：样式表中包含的样式规则的集合。IE 不支持这个属性，但有一个类似的rules 属性。
++ ownerRule：如果样式表是通过@import 导入的，这个属性就是一个指针，指向表示导入的规则；否则，值为null。IE 不支持这个属性。
++ deleteRule(index)：删除cssRules 集合中指定位置的规则。IE 不支持这个方法，但支持一个类似的removeRule()方法。
++ insertRule(rule,index)：向cssRules 集合中指定的位置插入rule 字符串。IE 不支持这个方法，但支持一个类似的addRule()方法。
+
+应用于文档的所有样式表是通过 `document.styleSheets` 集合来表示的。也可以直接通过<link>或<style>元素取得CSSStyleSheet 对象。DOM 规定了一个包含CSSStyleSheet 对象的属性，名叫`sheet`；除了IE，其他浏览器都支持这个属性。IE 支持的是`styleSheet`属性
+
+###元素大小
+####偏移量
+
++ `offsetHeight`：元素在垂直方向上占用的空间大小，以像素计。包括元素的高度、（可见的）水平滚动条的高度、上边框高度和下边框高度。
++ `offsetWidth`：元素在水平方向上占用的空间大小，以像素计。包括元素的宽度、（可见的）垂直滚动条的宽度、左边框宽度和右边框宽度。
++ `offsetLeft`：元素的左外边框至包含元素的左内边框之间的像素距离。
++ `offsetTop`：元素的上外边框至包含元素的上内边框之间的像素距离。
+
+####客户区大小
+有关客户区大小的属性有两个：clientWidth 和clientHeight。其中，clientWidth 属性是元素内容区宽度加上左右内边距宽度；clientHeight 属性是元素内容区高度加上上下内边距高度
+####滚动大小
++ scrollHeight：在没有滚动条的情况下，元素内容的总高度。
++ scrollWidth：在没有滚动条的情况下，元素内容的总宽度。
++ scrollLeft：被隐藏在内容区域左侧的像素数。通过设置这个属性可以改变元素的滚动位置。
++ scrollTop：被隐藏在内容区域上方的像素数。通过设置这个属性可以改变元素的滚动位置。
+####确定元素大小
+IE、Firefox 3+、Safari 4+、Opera 9.5 及Chrome 为每个元素都提供了一个getBoundingClientRect()方
+法。这个方法返回会一个矩形对象，包含4 个属性：left、top、right 和bottom。这些属性给出了元素在页面中相对于视口的位置。但是，浏览器的实现稍有不同。IE8 及更早版本认为文档的左上角坐
+标是(2, 2)，而其他浏览器包括IE9 则将传统的(0,0)作为起点坐标。因此，就需要在一开始检查一下位于
+(0,0)处的元素的位置，在IE8 及更早版本中，会返回(2,2)，而在其他浏览器中会返回(0,0)
+##遍历
+“DOM2 级遍历和范围”模块定义了两个用于辅助完成顺序遍历DOM 结构的类型：NodeIterator
+和TreeWalker。这两个类型能够基于给定的起点对DOM 结构执行深度优先（depth-first）的遍历操作。
+在与DOM 兼容的浏览器中（Firefox 1 及更高版本、Safari 1.3 及更高版本、Opera 7.6 及更高版本、Chrome
+0.2 及更高版本），都可以访问到这些类型的对象。IE 不支持DOM 遍历。使用下列代码可以检测浏览器
+对DOM2 级遍历能力的支持情况。
+```javascript
+var supportsTraversals = document.implementation.hasFeature("Traversal", "2.0");
+var supportsNodeIterator = (typeof document.createNodeIterator == "function");
+var supportsTreeWalker = (typeof document.createTreeWalker == "function");
+```
+##范围
+为了让开发人员更方便地控制页面，“DOM2 级遍历和范围”模块定义了“范围”（range）接口。通
+过范围可以选择文档中的一个区域，而不必考虑节点的界限（选择在后台完成，对用户是不可见的）。
+在常规的DOM 操作不能更有效地修改文档时，使用范围往往可以达到目的。Firefox、Opera、Safari 和
+Chrome 都支持DOM 范围。IE 以专有方式实现了自己的范围特性。
