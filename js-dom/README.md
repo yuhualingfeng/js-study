@@ -460,8 +460,8 @@ CSSStyleSheet 继承自StyleSheet，后者可以作为一个基础接口来定�
 
 + `disabled`：表示样式表是否被禁用的布尔值。这个属性是可读/写的，将这个值设置为true可以禁用样式表。
 + `href`：如果样式表是通过<link>包含的，则是样式表的URL；否则，是null。
-+ `media`：当前样式表支持的所有媒体类型的集合。与所有DOM 集合一样，这个集合也有一个length 属性和一个item()方法。也可以使用方括号语法取得集合中特定的项。如果集合是空列表，表示样式表适用于所有媒体。在IE 中，media 是一个反映<link>和<style>元素media特性值的字符串。
-+ `ownerNode`：指向拥有当前样式表的节点的指针，样式表可能是在HTML 中通过<link>或<style/>引入的（在XML 中可能是通过处理指令引入的）。如果当前样式表是其他样式表通过@import 导入的，则这个属性值为null。IE 不支持这个属性。
++ `media`：当前样式表支持的所有媒体类型的集合。与所有DOM 集合一样，这个集合也有一个length 属性和一个item()方法。也可以使用方括号语法取得集合中特定的项。如果集合是空列表，表示样式表适用于所有媒体。在IE 中，media 是一个反映`<link>`和`<style>`元素media特性值的字符串。
++ `ownerNode`：指向拥有当前样式表的节点的指针，样式表可能是在HTML 中通过`<link>`或`<style/>`引入的（在XML 中可能是通过处理指令引入的）。如果当前样式表是其他样式表通过@import 导入的，则这个属性值为null。IE 不支持这个属性。
 + `parentStyleSheet`：在当前样式表是通过@import 导入的情况下，这个属性是一个指向导入它的样式表的指针。
 + `title`：ownerNode 中title 属性的值。
 + `type`：表示样式表类型的字符串。对CSS 样式表而言，这个字符串是"type/css"。
@@ -491,7 +491,7 @@ CSSStyleSheet 继承自StyleSheet，后者可以作为一个基础接口来定�
 + scrollLeft：被隐藏在内容区域左侧的像素数。通过设置这个属性可以改变元素的滚动位置。
 + scrollTop：被隐藏在内容区域上方的像素数。通过设置这个属性可以改变元素的滚动位置。
 ####确定元素大小
-IE、Firefox 3+、Safari 4+、Opera 9.5 及Chrome 为每个元素都提供了一个getBoundingClientRect()方
+IE、Firefox 3+、Safari 4+、Opera 9.5 及Chrome 为每个元素都提供了一个`getBoundingClientRect()`方
 法。这个方法返回会一个矩形对象，包含4 个属性：left、top、right 和bottom。这些属性给出了元素在页面中相对于视口的位置。但是，浏览器的实现稍有不同。IE8 及更早版本认为文档的左上角坐
 标是(2, 2)，而其他浏览器包括IE9 则将传统的(0,0)作为起点坐标。因此，就需要在一开始检查一下位于
 (0,0)处的元素的位置，在IE8 及更早版本中，会返回(2,2)，而在其他浏览器中会返回(0,0)
