@@ -5,16 +5,19 @@
 2. `unload`:当页面完全卸载后在window 上面触发，当所有框架都卸载后在框架集上面触发，或者当嵌入的内容卸载完毕后在<object>元素上面触发
 3. `resize`：当窗口或框架的大小变化时在window 或框架上面触发  
 4. `scroll`：当用户滚动带滚动条的元素中的内容时，在该元素上面触发。<body>元素中包含所加载页面的滚动条
-5. error：当发生JavaScript 错误时在window 上面触发，当无法加载图像时在<img>元素上面触发，当无法加载嵌入内容时在<object>元素上面触发，或者当有一或多个框架无法加载时在框架集上面触发
+5. error：当发生JavaScript 错误时在window上面触发，当无法加载图像时在<img>元素上面触发，当无法加载嵌入内容时在<object>元素上面触发，或者当有一或多个框架无法加载时在框架集上面触发
+
 这些事件在DOM2级事件中都归为html事件,可以通过以下代码判断浏览器是否支持DOM2级事件
 ```javascript
 var isSupported = document.implementation.hasFeature('HTMLEvents',2.0);
 ```
 ###焦点事件
+
 1. `blur`：在元素失去焦点时触发。这个事件不会冒泡；所有浏览器都支持它.
 2. `focus`：在元素获得焦点时触发。这个事件不会冒泡；所有浏览器都支持它
 
 ###鼠标与滚轮事件
+
 1. `click`：在用户单击主鼠标按钮（一般是左边的按钮）或者按下回车键时触发。这一点对确保易访问性很重要，意味着onclick 事件处理程序既可以通过键盘也可以通过鼠标执行
 2. `dblclick`：在用户双击主鼠标按钮（一般是左边的按钮）时触发。从技术上说，这个事件并不是DOM2 级事件规范中规定的，但鉴于它得到了广泛支持，所以DOM3 级事件将其纳入了标准。
 3. `mousedown`：在用户按下了任意鼠标按钮时触发。不能通过键盘触发这个事件。
@@ -41,10 +44,11 @@ var isSupported = document.implementation.hasFeature("MouseEvent", "3.0")
 虽然鼠标事件主要是使用鼠标来触发的，但在按下鼠标时键盘上的某些键的状态也可以影响到所要采取的操作。这些修改键就是`Shift`、`Ctrl`、`Alt `和`Meta`（在Windows 键盘中是Windows 键，在苹果机中是Cmd 键），它们经常被用来修改鼠标事件的行为。DOM 为此规定了4 个属性，表示这些修改键的状态：`shiftKey`、`ctrlKey`、`altKey` 和`metaKey`。这些属性中包含的都是布尔值，如果相应的键被按下了，则值为true，否则值为false。
 IE9、Firefox、Safari、Chrome 和Opera 都支持这4 个键。IE8 及之前版本不支持metaKey 属性
 ###键盘与文本事件
+
 1. `keydown`：当用户按下键盘上的任意键时触发，而且如果按住不放的话，会重复触发此事件。
 2. `keypress`：当用户按下键盘上的字符键时触发，而且如果按住不放的话，会重复触发此事件。按下Esc 键也会触发这个事件
 1. `keyup`：当用户释放键盘上的键时触发。
-1. `textInput`:DOM3 级事件,这个事件是对keypress 的补充，用意是在将文本显示给用户之前更容易拦截文本。在文本插入文本框之前会触发textInput 事件,支持textInput的浏览器有IE9+、Safari 和Chrome
+1. `textInput`:DOM3 级事件,这个事件是对keypress的补充，用意是在将文本显示给用户之前更容易拦截文本。在文本插入文本框之前会触发textInput 事件,支持textInput的浏览器有IE9+、Safari 和Chrome
 
 在发生 keydown 和keyup 事件时，event 对象的keyCode 属性中会包含一个代码，与键盘上一
 个特定的键对应。对数字字母字符键，keyCode 属性的值与ASCII 码中对应小写字母或数字的编码相
