@@ -1,4 +1,5 @@
 ##事件类型
+
 ###UI事件
 
 1. `load`：当页面完全加载后在window 上面触发，当所有框架都加载完毕时在框架集上面触发，当图像加载完毕时在<img>元素上面触发，或者当嵌入的内容加载完毕时在<object>元素上面触发  
@@ -8,9 +9,11 @@
 5. error：当发生JavaScript 错误时在window上面触发，当无法加载图像时在<img>元素上面触发，当无法加载嵌入内容时在<object>元素上面触发，或者当有一或多个框架无法加载时在框架集上面触发
 
 这些事件在DOM2级事件中都归为html事件,可以通过以下代码判断浏览器是否支持DOM2级事件
+
 ```javascript
 var isSupported = document.implementation.hasFeature('HTMLEvents',2.0);
 ```
+
 ###焦点事件
 
 1. `blur`：在元素失去焦点时触发。这个事件不会冒泡；所有浏览器都支持它.
