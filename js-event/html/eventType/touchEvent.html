@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+
+    </style>
+<script src="../../js/UseEvent.js"></script>
+</head>
+<body>
+    <div id='touchstart'></div>
+    <div id='touchmove'></div>
+    <div id='touchend'></div>
+
+<script>
+
+
+    EventUtil.addEventHandler(document,'touchstart',function(e){
+        e = EventUtil.getEvent(e);
+        document.getElementById('touchstart').innerHTML=e.type+':x='+e.changedTouches[0].clientX+',y='+e.changedTouches[0].clientY;
+    });
+
+    EventUtil.addEventHandler(document,'touchmove',function(e){
+        e = EventUtil.getEvent(e);
+        EventUtil.preventDefault(e);
+        document.getElementById('touchmove').innerHTML=e.type+':x='+e.changedTouches[0].clientX+',y='+e.changedTouches[0].clientY;
+    });
+    
+    EventUtil.addEventHandler(document,'touchend',function(e){
+
+        e = EventUtil.getEvent(e);
+        document.getElementById('touchend').innerHTML=e.type+':x='+e.changedTouches[0].clientX+',y='+e.changedTouches[0].clientY;
+    });
+
+</script>
+</body>
+</html>
