@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+
+    </style>
+<script src="../../js/UseEvent.js"></script>
+</head>
+<body>
+    <div id='touchstart'></div>
+    <div id='touchmove'></div>
+    <div id='touchend'></div>
+
+<script>
+
+
+EventUtil.addEventHandler(window,'beforeunload',function(event){
+    event = EventUtil.getEvent(event);
+    var message = "亲，确定要离开我吗！";
+    event.returnValue = message;
+    return message;
+});
+
+EventUtil.addEventHandler(document,'contextmenu',function(event){
+    EventUtil.preventDefault(event);
+    alert(1);
+
+});
+
+</script>
+</body>
+</html>

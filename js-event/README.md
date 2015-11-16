@@ -46,6 +46,7 @@ var isSupported = document.implementation.hasFeature("MouseEvent", "3.0")
 鼠标事件发生时，不仅会有相对于浏览器窗口的位置，还有一个相对于整个电脑屏幕的位置。而通过`screenX` 和`screenY`属性就可以确定鼠标事件发生时鼠标指针相对于整个屏幕的坐标信息
 虽然鼠标事件主要是使用鼠标来触发的，但在按下鼠标时键盘上的某些键的状态也可以影响到所要采取的操作。这些修改键就是`Shift`、`Ctrl`、`Alt `和`Meta`（在Windows 键盘中是Windows 键，在苹果机中是Cmd 键），它们经常被用来修改鼠标事件的行为。DOM 为此规定了4 个属性，表示这些修改键的状态：`shiftKey`、`ctrlKey`、`altKey` 和`metaKey`。这些属性中包含的都是布尔值，如果相应的键被按下了，则值为true，否则值为false。
 IE9、Firefox、Safari、Chrome 和Opera 都支持这4 个键。IE8 及之前版本不支持metaKey 属性
+
 ###键盘与文本事件
 
 1. `keydown`：当用户按下键盘上的任意键时触发，而且如果按住不放的话，会重复触发此事件。
@@ -57,3 +58,74 @@ IE9、Firefox、Safari、Chrome 和Opera 都支持这4 个键。IE8 及之前版
 个特定的键对应。对数字字母字符键，keyCode 属性的值与ASCII 码中对应小写字母或数字的编码相
 同。因此，数字键7 的keyCode 值为55，而字母A 键的keyCode 值为65——与Shift 键的状态无关,具体怎么对应的可以自己测试或者百度.
 DOM 和IE 的event 对象都支持keyCode 属性
+
+###触摸事件
+
+1. `touchstart`:当手指触摸屏幕时触发；即使已经有一个手指放在了屏幕上也会触发。
+2. `touchmove`:当手指在屏幕上滑动时连续地触发。在这个事件发生期间，调用preventDefault()
+可以阻止滚动
+3. `touchend`:当手指从屏幕上移开时触发。
+
+每个触摸事件的event 对象都提供了在鼠标事件中常见的属性：
+bubbles、cancelable、view、clientX、clientY、screenX、screenY、detail、altKey、shiftKey、
+ctrlKey 和metaKey.  
+
+除了常见的 DOM属性外，触摸事件还包含下列三个用于跟踪触摸的属性。
+
++ touches：表示当前跟踪的触摸操作的Touch 对象的数组。
++ targetTouchs：特定于事件目标的Touch 对象的数组。
++ changeTouches：表示自上次触摸以来发生了什么改变的Touch 对象的数组。每个 Touch 对象包含下列属性。
+
+每个 Touch 对象包含下列属性。
+
++ clientX：触摸目标在视口中的x 坐标。
++ clientY：触摸目标在视口中的y 坐标。
++ identifier：标识触摸的唯一ID。
++ pageX：触摸目标在页面中的x 坐标。
++ pageY：触摸目标在页面中的y 坐标。
++ screenX：触摸目标在屏幕中的x 坐标。
++ screenY：触摸目标在屏幕中的y 坐标。
++ target：触摸的DOM 节点目标。
+
+```html
+    <div id='touchstart'></div>
+    <div id='touchmove'></div>
+    <div id='touchend'></div>
+```
+
+```javascript
+
+    EventUtil.addEventHandler(document,'touchstart',function(e){
+        e = EventUtil.getEvent(e);
+        document.getElementById('touchstart').innerHTML=e.type+':x='+e.changedTouches[0].clientX+',y='+e.changedTouches[0].clientY;
+    });
+
+    EventUtil.addEventHandler(document,'touchmove',function(e){
+        e = EventUtil.getEvent(e);
+        EventUtil.preventDefault(e);
+        document.getElementById('touchmove').innerHTML=e.type+':x='+e.changedTouches[0].clientX+',y='+e.changedTouches[0].clientY;
+    });
+    
+    EventUtil.addEventHandler(document,'touchend',function(e){
+
+        e = EventUtil.getEvent(e);
+        document.getElementById('touchend').innerHTML=e.type+':x='+e.changedTouches[0].clientX+',y='+e.changedTouches[0].clientY;
+    });
+
+```
+
+###HTML5事件
+
+1. `contextmenu`: 支持 contextmenu 事件的浏览器有IE、Firefox、Safari、Chrome 和Opera 11+.
+2. `beforeunload`: IE 和Firefox、Safari 和Chrome 都支持beforeunload 事件.
+3. `DOMContentLoaded`: 形成完整的DOM 树之后就会触发，不理会图像、JavaScript 文件、CSS 文件或其他资源是否已经下载完毕.IE9+、Firefox、Chrome、Safari 3.1+和Opera 9+都支持DOMContentLoaded 事件，对于不支持DOMContentLoaded 的浏览器，我们建议在页面加载期间设置一个时间为0 毫秒的超时调用.
+```javascript
+	setTimeout(function(){
+		//do something
+	},0);
+```
+4. `readystatechange`
+
+
+
+

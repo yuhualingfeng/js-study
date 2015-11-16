@@ -63,6 +63,20 @@ var newValue = window.oldValue;
 以上代码创建了一个框架集，其中一个框架居上，两个框架居下。对这个例子而言，可以通过
 `window.frames[0]`或者`window.frames["topFrame"]`来引用上方的框架。不过，恐怕你最好使用
 top 而非window 来引用这些框架（例如，通过`top.frames[0]`）,top 对象始终指向最高（最外）层的框架，也就是浏览器窗口,与top相对的是parent,parent指向的是父框架
+####框架自适应高度
+```html
+<iframe id="saledesc" style="width:1150px;border:none;" src="https://www.github.com"></iframe>
+```
+```javascript
+//为了简化代码,这里使用了部分jQuery的知识
+document.getElementById('saledesc').onload = function (){
+        var height;
+        height = $(document.getElementById('saledesc').contentWindow.document).height();
+        $('#saledesc').height(height + 50); //这里+50是为了兼容有横向滚动条
+        
+};
+```
+
 ###窗口位置
 使用下列代码可以跨浏览器取得窗口左边和上边的位置。
 ```javascript

@@ -348,10 +348,11 @@ alert(document.hasFocus()); //true
 ###HTMLDocument的变化
 ####readyState 属性
 document.readyState表示文档的加载进度,它有两个值分别为'loading'和'complete'.
-```
+```javascript
 if(document.readyState == 'complete'){
     //执行操作
 }
+```
 支持 readyState 属性的浏览器有IE4+、Firefox 3.6+、Safari、Chrome 和Opera 9+。
 ####compatMode 的属性
 document.compatMode属性告诉开发人员浏览器采用了哪种渲染模式。在标准模式下，document.compatMode 的
