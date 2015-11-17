@@ -119,11 +119,11 @@ ctrlKey 和metaKey.
 1. `contextmenu`: 支持 contextmenu 事件的浏览器有IE、Firefox、Safari、Chrome 和Opera 11+.
 2. `beforeunload`: IE 和Firefox、Safari 和Chrome 都支持beforeunload 事件.
 3. `DOMContentLoaded`: 形成完整的DOM 树之后就会触发，不理会图像、JavaScript 文件、CSS 文件或其他资源是否已经下载完毕.IE9+、Firefox、Chrome、Safari 3.1+和Opera 9+都支持DOMContentLoaded 事件，对于不支持DOMContentLoaded 的浏览器，我们建议在页面加载期间设置一个时间为0 毫秒的超时调用.
-```javascript
-	setTimeout(function(){
-		//do something
-	},0);
-```
+    ```javascript
+    	setTimeout(function(){
+    		//do something
+    	},0);
+    ```
 4. `readystatechange`
 
 
