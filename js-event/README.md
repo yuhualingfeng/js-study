@@ -1,4 +1,4 @@
-##事件类型
+##:ribbon:事件类型
 
 ###UI事件
 
@@ -119,12 +119,94 @@ ctrlKey 和metaKey.
 1. `contextmenu`: 支持 contextmenu 事件的浏览器有IE、Firefox、Safari、Chrome 和Opera 11+.
 2. `beforeunload`: IE 和Firefox、Safari 和Chrome 都支持beforeunload 事件.
 3. `DOMContentLoaded`: 形成完整的DOM 树之后就会触发，不理会图像、JavaScript 文件、CSS 文件或其他资源是否已经下载完毕.IE9+、Firefox、Chrome、Safari 3.1+和Opera 9+都支持DOMContentLoaded 事件，对于不支持DOMContentLoaded 的浏览器，我们建议在页面加载期间设置一个时间为0 毫秒的超时调用.
-    ```javascript
-    	setTimeout(function(){
-    		//do something
-    	},0);
-    ```
-4. `readystatechange`
+4. `readystatechange`:IE 为DOM文档中的某些部分提供了readystatechange 事件。这个事件的目的是提供与文档或元素的加载状态有关的信息.
+5. `pageshow,pagehide`:Firefox 和Opera 有一个特性，名叫“往返缓存”（back-forward cache，或bfcache）,pageshow，这个事件在页面显示时触发,pagehide该事件会在浏览器卸载页面的时候触发,pageshow,pagehide 事件的event 对象还包含一个名为persisted 的布尔值属性。如果页面被保存在了bfcache 中，则这个属性的值为true.兼容性：Firefox、Safari 5+、Chrome 和Opera。
+6. `hashchange`:URL 的参数列表（及URL 中“#”号后面的所有字符串）发生变化时触发。兼容性:IE8+、Firefox 3.6+、Safari 5+、Chrome 和Opera 10.6+。
+
+```javascript
+    //for item 3
+    setTimeout(function(){
+        //do something
+    },0);
+```
+###变动事件
+
+1. `DOMSubtreeModified`：在DOM 结构中发生任何变化时触发。这个事件在其他任何事件触发后都会触发。
+2. `DOMNodeInserted`：在一个节点作为子节点被插入到另一个节点中时触发。
+3. `DOMNodeRemoved`：在节点从其父节点中被移除时触发。
+4. `DOMNodeInsertedIntoDocument`：在一个节点被直接插入文档或通过子树间接插入文档之后触发。这个事件在DOMNodeInserted 之后触发。
+5. `DOMNodeRemovedFromDocument`：在一个节点被直接从文档中移除或通过子树间接从文档中移除之前触发。这个事件在DOMNodeRemoved 之后触发。
+6. `DOMAttrModified`：在特性被修改之后触发。
+7. `DOMCharacterDataModified`：在文本节点的值发生变化时触发。
+
+`DOMSubtreeModified` `DOMNodeInserted` `DOMNodeRemoved`兼容性:Firefox 3+ Safari 3+及Chrome IE9+
+
+##:fire:内存和性能
+影响内存和性能的因素：首先，每个函数都是对象，都会占用内存；内存中的对象越多，性能就越差。其次，必须事先指定所有事件处理程序而导致的DOM访问次数，会延迟整个页面的交互就绪时间。
+优化方案:通过事件委托和移除事件处理程序.
+
+####事件委托
+```html
+<ul id="myLinks">
+<li id="goSomewhere">Go somewhere</li>
+<li id="doSomething">Do something</li>
+<li id="sayHi">Say hi</li>
+</ul>
+```
+```javascript
+//传统做法
+var item1 = document.getElementById("goSomewhere");
+var item2 = document.getElementById("doSomething");
+var item3 = document.getElementById("sayHi");
+EventUtil.addHandler(item1, "click", function(event){
+location.href = "http://www.wrox.com";
+});
+EventUtil.addHandler(item2, "click", function(event){
+document.title = "I changed the document's title";
+});
+EventUtil.addHandler(item3, "click", function(event){
+alert("hi");
+});
+
+//事件委托
+
+var list = document.getElementById("myLinks");
+EventUtil.addHandler(list, "click", function(event){
+event = EventUtil.getEvent(event);
+var target = EventUtil.getTarget(event);
+switch(target.id){
+case "doSomething":
+document.title = "I changed the document's title";
+break;
+case "goSomewhere":
+location.href = "http://www.wrox.com";
+break;
+case "sayHi":
+alert("hi");
+break;
+}
+});
+
+```
+####移除事件处理程序
+当页面的元素被替换前需要移除其事件处理程序,页面卸载前也需要移除事件处理程序(通过onunload 事件处理程序移除所有事件处理程序).因为页面卸载后有些浏览器依然将事件处理程序保存在内存中,IE8 及更早版本在这种
+情况下依然是问题最多的浏览器，尽管其他浏览器或多或少也有类似的问题.
+
+```html
+<div id="myDiv">
+<input type="button" value="Click Me" id="myBtn">
+</div>
+<script type="text/javascript">
+var btn = document.getElementById("myBtn");
+btn.onclick = function(){
+
+btn.onclick = null; //移除事件处理程序
+document.getElementById("myDiv").innerHTML = "Processing..."; 
+
+};
+</script>
+```
+
 
 
 
