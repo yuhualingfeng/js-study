@@ -41,10 +41,10 @@ var isSupported = document.implementation.hasFeature("MouseEvents", "2.0");
 var isSupported = document.implementation.hasFeature("MouseEvent", "3.0")
 ```
 
-鼠标事件都是在浏览器视口中的特定位置上发生的。这个位置信息保存在事件对象的`clientX` 和`clientY` 属性中。所有浏览器都支持这两个属性
-通过客户区坐标能够知道鼠标是在视口中什么位置发生的，而页面坐标通过事件对象的`pageX` 和`pageY` 属性,在页面没有滚动的情况下，pageX 和pageY 的值与clientX 和clientY 的值相等。IE8 及更早版本不支持事件对象上的页面坐标，不过使用客户区坐标和滚动信息可以计算出来。
-鼠标事件发生时，不仅会有相对于浏览器窗口的位置，还有一个相对于整个电脑屏幕的位置。而通过`screenX` 和`screenY`属性就可以确定鼠标事件发生时鼠标指针相对于整个屏幕的坐标信息
-虽然鼠标事件主要是使用鼠标来触发的，但在按下鼠标时键盘上的某些键的状态也可以影响到所要采取的操作。这些修改键就是`Shift`、`Ctrl`、`Alt `和`Meta`（在Windows 键盘中是Windows 键，在苹果机中是Cmd 键），它们经常被用来修改鼠标事件的行为。DOM 为此规定了4 个属性，表示这些修改键的状态：`shiftKey`、`ctrlKey`、`altKey` 和`metaKey`。这些属性中包含的都是布尔值，如果相应的键被按下了，则值为true，否则值为false。
+鼠标事件都是在浏览器视口中的特定位置上发生的。这个位置信息保存在事件对象的`clientX` 和`clientY` 属性中。所有浏览器都支持这两个属性  
+通过客户区坐标能够知道鼠标是在视口中什么位置发生的，而页面坐标通过事件对象的`pageX` 和`pageY` 属性,在页面没有滚动的情况下，pageX 和pageY 的值与clientX 和clientY 的值相等。IE8 及更早版本不支持事件对象上的页面坐标，不过使用客户区坐标和滚动信息可以计算出来。  
+鼠标事件发生时，不仅会有相对于浏览器窗口的位置，还有一个相对于整个电脑屏幕的位置。而通过`screenX` 和`screenY`属性就可以确定鼠标事件发生时鼠标指针相对于整个屏幕的坐标信息  
+虽然鼠标事件主要是使用鼠标来触发的，但在按下鼠标时键盘上的某些键的状态也可以影响到所要采取的操作。这些修改键就是`Shift`、`Ctrl`、`Alt `和`Meta`（在Windows 键盘中是Windows 键，在苹果机中是Cmd 键），它们经常被用来修改鼠标事件的行为。DOM 为此规定了4 个属性，表示这些修改键的状态：`shiftKey`、`ctrlKey`、`altKey` 和`metaKey`。这些属性中包含的都是布尔值，如果相应的键被按下了，则值为true，否则值为false。  
 IE9、Firefox、Safari、Chrome 和Opera 都支持这4 个键。IE8 及之前版本不支持metaKey 属性
 
 ###键盘与文本事件
