@@ -1,0 +1,100 @@
+#ECMAScript原生引用类型
+对象是某个特定引用类型的实例。新对象是使用new 操作符后跟一个构造函数来创建的。构造函数本身就是一个函数，只不过该函数是出于创建新对象的目的而定义的。
+```javascript
+var object = new Object();
+```
+ECMAScript 提供了很多原生引用类型（例如Object），以便开发人员用以实现常见的计算任务。
+
+##Object类型
+
+到目前为止，我们看到的大多数引用类型值都是Object 类型的实例；而且，Object 也是ECMAScript 中使用最多的一个类型。虽然Object 的实例不具备多少功能，但对于在应用程序中存储和传输数据而言，它们确实是非常理想的选择
+
+###创建方式
+创建Object对象的方式有两种
+
+1. 使用`new`操作符后跟`Object`构造函数,
+2. 对象字面量
+```javascript
+
+//new操作符后跟Object构造函数
+var obj = new Object();
+obj.name = 'yuhualingfeng';
+obj.age = '18';
+
+//对象字面量
+var object = {
+	name:'jake',
+	age:24
+};
+```
+通过对象字面量创建时,最后一个属性后不能加`,` 否则IE7及更早版本会报错.
+
+###访问方式
+访问Object对象的属性也有两种方式,点方法或数组的访问形式.
+```javascript
+	var name = object.name; //点方法
+	var age = object['age']; //数组访问形式
+```
+我们建议使用点方法,但当访问的属性为变量时我们就必须使用数组访问形式.
+
+##Array类型
+除Object类型外,Array是最常用的类型,Array对象与其他语言相比有着自己的不同之处,首先同一数组对象的不同项可以保存不同类型的数据,其次数组对象的长短可以动态改变.
+
+###创建方式
+创建Array对象的方式有两种
+
+1. Array构造函数.
+2. 数组对象字面量
+
+```javascript
+
+//Array构造函数
+var colors = new Array();
+var colors = new Array(20);
+var colors = new Array('red','black','blue');
+
+//数组对象字面量
+var colors =['red','blue','black'];
+var name =[];
+var values = [1,2,];
+
+```
+由于IE8及之前版本中的ECMAScript实现在数组字面量方面存在bug,上述代码中values的长度为3,其他浏览器中value的长度为2.为了兼容，我们应避免在最数组的最后一下中添加`,`
+
+##读取方式
+
+读取和设置数组的值时，使用方括号并提供相应值的基于0 的数字索引
+```javascript
+
+var colors = ["red", "blue", "green"]; // 定义一个字符串数组
+alert(colors[0]); // 显示第一项
+colors[2] = "black"; // 修改第三项
+colors[3] = "brown"; // 新增第四项
+
+```
+
+数组对象有一个`length`属性表示数组对象的长度,通过修改这个属性的值可以改变数组的长度
+
+```javascript
+
+var colors = ["red", "blue", "green"]; // 创建一个包含3 个字符串的数组
+var names = []; // 创建一个空数组
+alert(colors.length); //3
+alert(names.length); //0
+
+colors.length = 2;
+alert(colors[2]); //undefined
+
+```
+
+```javascript
+
+var colors = ["red", "blue", "green"]; // 创建一个包含3 个字符串的数组
+colors[colors.length] = "black"; //（在位置3）添加一种颜色
+colors[colors.length] = "brown"; //（在位置4）再添加一种颜色
+
+colors[99] = "black"; // （在位置 99）添加一种颜色
+alert(colors.length); // 100
+
+```
+tip:数组最多可以包含4 294 967 295 个项.
